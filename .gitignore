@@ -1,0 +1,10 @@
+# Ignores logging and caching
+api/app/cache/
+api/app/logs/
+api/web/bundles/
+
+# Removing vendors
+api/vendor/
+
+# Removes the netbeans configuration.
+nbproject/

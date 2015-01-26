@@ -1,0 +1,7 @@
+parameters:
+#    w4f_game.example.class: W4f\GameBundle\Example
+
+services:
+#    w4f_game.example:
+#        class: %w4f_game.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

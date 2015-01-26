@@ -1,0 +1,6 @@
+w4f_game:
+    resource: "@W4fGameBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+    
+
