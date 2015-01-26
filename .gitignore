@@ -6,5 +6,8 @@ api/web/bundles/
 # Removing vendors
 api/vendor/
 
+# Removing UI components
+assets/libs/*
+
 # Removes the netbeans configuration.
 nbproject/
