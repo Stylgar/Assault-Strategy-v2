@@ -10,9 +10,9 @@ class HomeController extends Controller
     public function indexAction()
     {
         $response = new JsonResponse();
-        $response->setData(array(
-            'Hello' => 1
-        ));
+        $response->setData(array(array(
+            'Hello' => 'hello!'
+        )));
         
         return $response;
     }

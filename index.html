@@ -1,13 +1,19 @@
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <title>Welcome to Assault &amp; Strategy!</title>
         <link rel="stylesheet" href="assets/libs/bootstrap/dist/css/bootstrap.css" />
     </head>
-    <body>
-       
+    <body ng-app="AsV2">
+        <div id="content" ng-controller="HomePageCtrl">
         <div class="btn btn-danger">Don't click!</div>
         
-        <script type="text/javascript" src="assets/libs/angularjs/angular.js"></script>
+        System wants to tell you {{response.Hello}}.
         
+        <script type="text/javascript" src="assets/libs/angular/angular.js"></script>
+        <script type="text/javascript" src="assets/libs/angular-resource/angular-resource.js"></script>
+        
+        <script type="text/javascript" src="app/app.module.js"></script>
+        </div>
     </body>
 </html>
