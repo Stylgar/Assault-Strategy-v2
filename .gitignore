@@ -8,6 +8,11 @@ api/vendor/
 
 # Removing UI components
 assets/libs/*
+node_modules/
+npm-debug.log
 
 # Removes the netbeans configuration.
 nbproject/
+
+# Removing reports
+Reports/
