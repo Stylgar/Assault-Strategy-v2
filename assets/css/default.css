@@ -1,0 +1,8 @@
+/* Page transition */
+.view-animation{
+    &.ng-enter{
+        -webkit-animation: fadeIn 0.5s;
+        animation : fadeIn 0.5s;
+    }
+}
+

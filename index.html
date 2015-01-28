@@ -1,19 +1,17 @@
-<html lang="en">
+<html lang="en" data-ng-app="AsV2">
     <head>
         <meta charset="utf-8">
         <title>Welcome to Assault &amp; Strategy!</title>
         <link rel="stylesheet" href="assets/libs/bootstrap/dist/css/bootstrap.css" />
     </head>
-    <body ng-app="AsV2">
-        <div id="content" ng-controller="HomePageCtrl">
-        <div class="btn btn-danger">Don't click!</div>
-        
-        System wants to tell you {{response.Hello}}.
+    <body>
+        <div data-ng-view=""></div>
         
         <script type="text/javascript" src="assets/libs/angular/angular.js"></script>
         <script type="text/javascript" src="assets/libs/angular-resource/angular-resource.js"></script>
+        <script type="text/javascript" src="assets/libs/angular-route/angular-route.js"></script>
         
         <script type="text/javascript" src="app/app.module.js"></script>
-        </div>
+        <script type="text/javascript" src="app/components/home/home.js"></script>
     </body>
 </html>
