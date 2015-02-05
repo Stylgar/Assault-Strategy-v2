@@ -3,6 +3,9 @@ api/app/cache/
 api/app/logs/
 api/web/bundles/
 
+# Sensible files
+api/app/config/parameters.yml
+
 # Removing vendors
 api/vendor/
 
