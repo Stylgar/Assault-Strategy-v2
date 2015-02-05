@@ -1,0 +1,41 @@
+<p>Hey there, rookie ! <br></p>
+
+<p>So you want to join the battle eh? Come over there, there are just a few 
+    fields to fill in! After that you will be sent directly to the battleground,
+    to fight the most famous commanders you have ever heard of.</p>
+
+<div class="row col-sm-offset-2 col-sm-8">
+    <form id="signUpForm" class="form-horizontal">
+        <div class="form_group">
+            <label class="col-sm-4 control-label" for="txtLogin">Your login:</label>
+            <div class="col-sm-8">
+                <input type="text" id="txtLogin" class="form-control" Placeholder="Login" ng-model="login" />
+            </div>
+        </div>
+        <div class="form_group">
+            <label class="col-sm-4 control-label" for="txtMail" >Your email:</label>
+            <div class="col-sm-8">
+                <input type="text" id="txtMail" class="form-control" placeholder="Email" ng-model="email"/>
+            </div>
+        </div>
+        <div class="form_group">
+            <label class="col-sm-4 control-label" for="txtPwd1" >Your secret password:</label>
+            <div class="col-sm-8">
+                <input type="password" id="txtPwd1" class="form-control" placeholder="Password" ng-model="pwd"/>
+            </div>
+        </div>
+        <div class="form_group">
+            <label class="col-sm-4 control-label" for="txtPwd2" >Your password again:</label>
+            <div class="col-sm-8">
+                <input type="password" id="txtPwd2" class="form-control" placeholder="Password" ng-model="pwd2"/>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="col-sm-offset-4 col-sm-2">
+                <button type="submit" ng-click="enroll()">Enroll</button>
+            </div>
+        </div>
+    </form>
+    
+    <div class="success" ng-show="formValid">Welcome, commander {{login}}</div>
+</div>

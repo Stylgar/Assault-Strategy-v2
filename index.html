@@ -1,17 +1,28 @@
-<html lang="en" data-ng-app="AsV2">
+<html lang="en" data-ng-app="asV2">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Welcome to Assault &amp; Strategy!</title>
         <link rel="stylesheet" href="assets/libs/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="assets/css/bootstrap-asV2-theme.css" />
+        <link rel="stylesheet" href="assets/css/default.css" />
     </head>
-    <body>
-        <div data-ng-view=""></div>
-        
+    <body data-ng-controller="rootCtrl" data-ng-cloak="">
+        <div>
+            <navbar-directive />
+        </div>
+        <div class="container">
+            <div data-ng-view="" class="view-animation"></div>
+        </div>
         <script type="text/javascript" src="assets/libs/angular/angular.js"></script>
         <script type="text/javascript" src="assets/libs/angular-resource/angular-resource.js"></script>
         <script type="text/javascript" src="assets/libs/angular-route/angular-route.js"></script>
-        
+        <script type="text/javascript" src="assets/libs/angular-bootstrap/ui-bootstrap.js"></script>
+
         <script type="text/javascript" src="app/app.module.js"></script>
         <script type="text/javascript" src="app/components/home/home.js"></script>
+        <script type="text/javascript" src="app/components/login/login.js"></script>
+        <script type="text/javascript" src="app/components/signup/signup.js"></script>
+        <script type="text/javascript" src="app/shared/navbar/navbar.js"></script>
     </body>
 </html>

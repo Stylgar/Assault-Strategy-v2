@@ -1,3 +1,3 @@
-angular.module('AsV2', ['AsV2.home'])
-.controller('rootCtrl',function($rootscope,$scope){
+angular.module('asV2', ['asV2.home', 'asV2.common', 'asV2.login', 'asV2.signup'])
+.controller('rootCtrl',function($rootScope, $scope){
 });

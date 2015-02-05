@@ -1,5 +1,5 @@
 
-angular.module('AsV2.home', ['ngRoute', 'ngResource'])
+angular.module('asV2.home', ['ngRoute', 'ngResource'])
 .config(function ($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'app/components/home/home.html',
