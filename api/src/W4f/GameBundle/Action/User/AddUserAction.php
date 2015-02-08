@@ -59,7 +59,6 @@ class AddUserAction extends GenericAction{
     }
     
     private function checkUserValidity(){
-        
         if ($this->user == null)
         {
             $this->result->report->logError("No user provided");
@@ -67,17 +66,10 @@ class AddUserAction extends GenericAction{
         }
 
         // Check login
-        $login = $this->user->getLogin();
-        if ($login == null || strlen($login) < 3 || strlen($login) > 16
-                || !preg_match('#^[a-zA-Z][a-zA-Z0-9 ]+$#', $login)){
-            $this->result->report->logError('Invalid login');
-        }
-        //TODO: add check that login does not exist.
+        $this->checkLogin();
         
-        $email = $this->user->getEmail();
-        if($email == null || !preg_match('#^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$#',$email)){
-            $this->result->report->logError('Invalid email');
-        }
+        // Check email
+        $this->checkEmail();
         
         // Check password
         $password = $this->user->getPassword();
@@ -86,6 +78,45 @@ class AddUserAction extends GenericAction{
         }
         
         return count($this->result->report->errors) == 0;
+    }
+    
+    /**
+     * Verifies user email. Rules:
+     * - should look like an email (basic regexp check)
+     * - should not be already in use.
+     */
+    private function checkEmail(){
+        $email = $this->user->getEmail();
+        if($email == null || !preg_match('#^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$#',$email)){
+            $this->result->report->logError('Invalid email');
+        }
+        
+        $context = $this->uoW->getDbContext();
+        $repository = $context->getRepository('W4fModel:UserInfo');
+        if( $repository->findOneByEmail($email) != null){
+            $this->result->report->logError('Email already in use.');
+        }
+    }
+    
+    /**
+     * Verifies user login. Rules:
+     * - Should be between 3 and 16 characters
+     * - Should start with a letter
+     * - Should contain only letters, numbers and spaces
+     * - Should not be already taken.
+     */
+    private function checkLogin(){
+        $login = $this->user->getLogin();
+        if ($login == null || strlen($login) < 3 || strlen($login) > 16
+                || !preg_match('#^[a-zA-Z][a-zA-Z0-9 ]+$#', $login)){
+            $this->result->report->logError('Invalid login');
+        }
+        
+        $context = $this->uoW->getDbContext();
+        $repository = $context->getRepository('W4fModel:UserInfo');
+        if( $repository->findOneByLogin($login) != null){
+            $this->result->report->logError('User already exists.');
+        }
     }
 }
 
