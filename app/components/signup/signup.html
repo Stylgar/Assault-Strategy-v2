@@ -1,38 +1,61 @@
-<p>Hey there, rookie ! <br></p>
+<div class="row col-sm-offset-2 col-sm-8 bg-success" ng-show="suscribeSuccessful">
+    Congratulations, soldier, you are now part of the battlefield!
+    
+</div>
 
-<p>So you want to join the battle eh? Come over there, there are just a few 
+<div class="row col-sm-offset-2 col-sm-8" ng-hide="suscribeSuccessful">
+    <p>Hey there, rookie ! <br></p>
+    
+    <p>So you want to join the battle eh? Come over there, there are just a few 
     fields to fill in! After that you will be sent directly to the battleground,
     to fight the most famous commanders you have ever heard of.</p>
 
-<div class="row col-sm-offset-2 col-sm-8">
-    <form id="signUpForm" class="form-horizontal">
-        <div class="form_group">
+    <form name="signUpForm" ng-submit="submitForm(signUpForm.$valid)" class="form-horizontal" novalidate="">
+        
+        <!-- User login -->
+        <div class="form_group" ng-class="{ 'has-error' : signUpForm.login.$invalid && !signUpForm.login.$pristine }">
             <label class="col-sm-4 control-label" for="txtLogin">Your login:</label>
             <div class="col-sm-8">
-                <input type="text" id="txtLogin" class="form-control" Placeholder="Login" ng-model="login" />
+                <input type="text" name="login" id="txtLogin" ng-minlength="3" ng-maxlength="16" pattern="[a-zA-Z][a-zA-Z0-9 ]+" 
+                       class="form-control" Placeholder="Login" required="" ng-model="newUser.login" />
+                <p ng-show="signUpForm.login.$invalid && !signUpForm.login.$pristine" class="help-block">Your name is required. It must be
+                between 3 and 16 characters long and must be composed only of letters, numbers and spaces.</p>
             </div>
         </div>
-        <div class="form_group">
+        
+        <!-- User email -->
+        <div class="form_group" ng-class="{ 'has-error' : signUpForm.email.$invalid && !signUpForm.email.$pristine }">
             <label class="col-sm-4 control-label" for="txtMail" >Your email:</label>
             <div class="col-sm-8">
-                <input type="text" id="txtMail" class="form-control" placeholder="Email" ng-model="email"/>
+                <input type="email" name="email" id="txtMail" class="form-control" placeholder="Email" required="" ng-model="newUser.email"/>
+                <p ng-show="signUpForm.email.$invalid && !signUpForm.email.$pristine" class="help-block">Your email is required.</p>
             </div>
+            
         </div>
-        <div class="form_group">
+        
+        <!-- User password -->
+        <div class="form_group" ng-class="{ 'has-error' : signUpForm.pwd.$invalid && !signUpForm.pwd.$pristine }">
             <label class="col-sm-4 control-label" for="txtPwd1" >Your secret password:</label>
             <div class="col-sm-8">
-                <input type="password" id="txtPwd1" class="form-control" placeholder="Password" ng-model="pwd"/>
+                <input type="password" name="pwd" id="txtPwd1" ng-minlength="5" class="form-control" placeholder="Password" required="" ng-model="newUser.password"/>
+                <p ng-show="signUpForm.pwd.$invalid && !signUpForm.pwd.$pristine" class="help-block">Your password is required. It must be minimum 5 characters long</p>
             </div>
         </div>
-        <div class="form_group">
+        
+        <!-- Repeat user password -->
+        <div class="form_group" ng-class="{ 'has-error' : (signUpForm.pwd2.$invalid && !signUpForm.pwd2.$pristine) || errorIdenticalPwd}">
             <label class="col-sm-4 control-label" for="txtPwd2" >Your password again:</label>
             <div class="col-sm-8">
-                <input type="password" id="txtPwd2" class="form-control" placeholder="Password" ng-model="pwd2"/>
+                <input type="password" name="pwd2" id="txtPwd2" ng-minlength="5" class="form-control" placeholder="Confirm password" required="" ng-model="newUser.password2"/>
+                <p ng-show="signUpForm.pwd2.$invalid && !signUpForm.pwd2.$pristine" class="help-block">Please enter same password you entered above.</p>
+                <span ng-show="errorIdenticalPwd">Your passwords do not match !</span>
             </div>
         </div>
+        
+        <!-- Button to submit -->
         <div class="form_group">
             <div class="col-sm-offset-4 col-sm-2">
-                <button type="submit" ng-click="enroll()">Enroll</button>
+                <button type="submit" class="btn btn-primary" ng-disabled="signUpForm.$invalid">Enroll</button>
             </div>
         </div>
     </form>

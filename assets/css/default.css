@@ -12,4 +12,15 @@ body{
 }
 
 
+/* Form validation */
+form input.ng-invalid.ng-touched {
+    background-color: #FA787E;
+}
+
+form input.ng-valid.ng-touched {
+    background-color: #78FA89;
+}
+
+
+
 

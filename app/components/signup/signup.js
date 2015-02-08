@@ -1,17 +1,26 @@
-angular.module('asV2.signup', ['ngRoute'])
+angular.module('asV2.signup', ['ngRoute', 'asV2.service'])
 .config(function ($routeProvider) {
     $routeProvider.when('/signup', {
         templateUrl: 'app/components/signup/signup.html',
         controller: 'signupCtrl'
     });
-}).controller('signupCtrl', function($scope){
-   
-   $scope.enroll = function(){
-       console.log('Called enroll');
-       if ($scope.login !== "")
-       {
-           $scope.formValid = true;
-       }
-   };
-});
+}).controller('signupCtrl', function ($scope, userService) {
+    $scope.suscribeSuccessful = false;
 
+    $scope.submitForm = function (isValid) {
+        if (isValid) {
+            if ($scope.newUser.password !== $scope.newUser.password2) {
+                $scope.errorIdenticalPwd = true;
+            }
+
+            userService.create($scope.newUser).then(function (result) {
+                if (result){
+                    $scope.suscribeSuccessful = true;
+                }
+            }, function () {
+                console.log('We could not add it.');
+            });
+
+        }
+    };
+});

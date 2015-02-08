@@ -59,6 +59,14 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        mappings:
+            name:
+                type: annotation
+                dir: %kernel.root_dir%/../src/W4f/GameBundle/Model
+                alias: W4fModel
+                prefix: W4f\GameBundle\Model
+                is_bundle: false
+        
 
 # Swiftmailer Configuration
 swiftmailer:

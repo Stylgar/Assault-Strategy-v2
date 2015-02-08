@@ -6,5 +6,7 @@ w4f_game_homepage:
     
 
 w4f_game_subscribe:
-    path: /subscribe
-    defaults: { _controller: W4fGameBundle:User:subscribe }
+    path: /user
+    defaults: { _controller: W4fGameBundle:User:addUser }
+    requirements:
+        _method:  POST
