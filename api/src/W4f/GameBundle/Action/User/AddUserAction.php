@@ -4,7 +4,7 @@ namespace W4f\GameBundle\Action\User;
 
 use W4f\GameBundle\Action\GenericAction;
 
-use W4f\GameBundle\Model\UserInfo;
+use W4f\GameBundle\Model\Account;
 use W4f\GameBundle\Model\UnitOfWork;
 use W4f\GameBundle\Model\ControllerResponse;
 
@@ -15,7 +15,7 @@ class AddUserAction extends GenericAction{
     
     /**
      * The current user being added.
-     * @var \W4f\GameBundle\Model\UserInfo
+     * @var \W4f\GameBundle\Model\Account
      */
     private $user;
     
@@ -35,7 +35,7 @@ class AddUserAction extends GenericAction{
      * @param \W4f\GameBundle\Action\User\UserInfo $user
      * @return \W4f\GameBundle\Model\ControllerResponse
      */
-    public function addUser(UserInfo $user){
+    public function addUser(Account $user){
         
         // Set the different elements that will be used in the response.
         $this->user = $user;
@@ -58,6 +58,13 @@ class AddUserAction extends GenericAction{
         
     }
     
+    /**
+     * Verifies user account validity. Includes:
+     * - login
+     * - email
+     * - password
+     * @return boolean
+     */
     private function checkUserValidity(){
         if ($this->user == null)
         {
@@ -92,7 +99,7 @@ class AddUserAction extends GenericAction{
         }
         
         $context = $this->uoW->getDbContext();
-        $repository = $context->getRepository('W4fModel:UserInfo');
+        $repository = $context->getRepository('W4fModel:Account');
         if( $repository->findOneByEmail($email) != null){
             $this->result->report->logError('Email already in use.');
         }
@@ -113,7 +120,7 @@ class AddUserAction extends GenericAction{
         }
         
         $context = $this->uoW->getDbContext();
-        $repository = $context->getRepository('W4fModel:UserInfo');
+        $repository = $context->getRepository('W4fModel:Account');
         if( $repository->findOneByLogin($login) != null){
             $this->result->report->logError('User already exists.');
         }

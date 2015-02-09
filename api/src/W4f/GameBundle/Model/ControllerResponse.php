@@ -6,6 +6,9 @@ use W4f\GameBundle\Model\Report;
 
 class ControllerResponse{
 
+    /**
+     * Real response to the query. Can be anything (boolean, list, object...)
+     */
     public $response;
     
     /**

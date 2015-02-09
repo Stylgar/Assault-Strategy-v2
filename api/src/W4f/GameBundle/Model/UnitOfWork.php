@@ -44,7 +44,7 @@ class UnitOfWork {
             $this->dbContext->flush();
             $this->dbContext->getConnection()->commit();
         } catch (Exception $ex) {
-            $this->dbContext->getConnection()->rollbackSavepoint();
+            $this->dbContext->getConnection()->rollback();
             throw $ex;
         }
         

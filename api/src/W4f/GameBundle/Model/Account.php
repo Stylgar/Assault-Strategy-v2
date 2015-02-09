@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * 
  * Then to update database: php app/console doctrine:schema:update --force
  */
-class UserInfo {
+class Account {
     
     /**
      * The user id
@@ -64,7 +64,7 @@ class UserInfo {
      * Set login
      *
      * @param string $login
-     * @return UserInfo
+     * @return Account
      */
     public function setLogin($login)
     {
@@ -87,7 +87,7 @@ class UserInfo {
      * Set email
      *
      * @param string $email
-     * @return UserInfo
+     * @return Account
      */
     public function setEmail($email)
     {
@@ -110,7 +110,7 @@ class UserInfo {
      * Set password
      *
      * @param string $password
-     * @return UserInfo
+     * @return Account
      */
     public function setPassword($password)
     {
