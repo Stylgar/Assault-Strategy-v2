@@ -5,7 +5,7 @@ angular.module('asV2.signup', ['ngRoute', 'asV2.service'])
         controller: 'signupCtrl'
     });
 }).controller('signupCtrl', function ($scope, userService) {
-    $scope.suscribeSuccessful = false;
+    $scope.subscribeSuccessful = false;
 
     $scope.submitForm = function (isValid) {
         if (isValid) {
@@ -15,7 +15,7 @@ angular.module('asV2.signup', ['ngRoute', 'asV2.service'])
 
             userService.create($scope.newUser).then(function (result) {
                 if (result){
-                    $scope.suscribeSuccessful = true;
+                    $scope.subscribeSuccessful = true;
                 }
             }, function () {
                 console.log('We could not add it.');
