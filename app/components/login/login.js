@@ -1,4 +1,4 @@
-angular.module('asV2.login', ['asV2.service'])
+angular.module('asV2.login', ['asV2.service.login'])
 .directive('loginDirective', function() {
   return {
     restrict: 'E',

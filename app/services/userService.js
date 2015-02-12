@@ -1,4 +1,4 @@
-angular.module('asV2.service', ['restangular'])
+angular.module('asV2.service.user', ['restangular'])
 .factory('userService', function (Restangular) {
     return {
         get: get,

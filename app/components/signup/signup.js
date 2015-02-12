@@ -1,4 +1,4 @@
-angular.module('asV2.signup', ['ngRoute', 'asV2.service'])
+angular.module('asV2.signup', ['ngRoute', 'asV2.service.user'])
 .config(function ($routeProvider) {
     $routeProvider.when('/signup', {
         templateUrl: 'app/components/signup/signup.html',
