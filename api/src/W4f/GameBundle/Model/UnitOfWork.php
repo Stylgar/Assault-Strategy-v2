@@ -3,6 +3,7 @@
 namespace W4f\GameBundle\Model;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\ConnectionException;
 
 class UnitOfWork {
 
@@ -19,7 +20,7 @@ class UnitOfWork {
     }
     
     public function __destruct() {
-        $this->dbContext->getConnection()->rollback();
+        
     }
     
     /**
@@ -44,8 +45,11 @@ class UnitOfWork {
             $this->dbContext->flush();
             $this->dbContext->getConnection()->commit();
         } catch (Exception $ex) {
-            $this->dbContext->getConnection()->rollback();
-            throw $ex;
+            try{
+                $this->dbContext->getConnection()->rollback();
+            }
+            catch (Doctrine\DBAL\ConnectionException $ex) {
+            }
         }
         
     }

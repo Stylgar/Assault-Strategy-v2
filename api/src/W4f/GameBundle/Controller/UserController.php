@@ -9,7 +9,6 @@ use W4f\GameBundle\Action\User\AddUserAction;
 
 class UserController extends Controller {
 
-    
     /**
      * Awaited in the query:
      * { newUser: { login : xxx, password: yyyy, email : zzzz }}
@@ -17,7 +16,6 @@ class UserController extends Controller {
      */
     public function addUserAction() {
         $request = json_decode($this->get("request")->getContent(), true);
-
         // Decode request
         $newUser = $this->decodeAddQuery($request);
         

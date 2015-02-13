@@ -13,6 +13,8 @@ use W4f\GameBundle\Model\ControllerResponse;
  */
 class AddUserAction extends GenericAction{
     
+    public static $bcryptSalt = "war4funIsAWargameThatRocks";
+
     /**
      * The current user being added.
      * @var \W4f\GameBundle\Model\Account
@@ -45,9 +47,8 @@ class AddUserAction extends GenericAction{
             $this->result->response = false;
             return $this->result;
         }
-        
         // Hash the password
-        $this->user->setPassword(password_hash($this->user->getPassword(), PASSWORD_BCRYPT));
+        $this->user->setPassword(password_hash($this->user->getPassword(), PASSWORD_BCRYPT, array('salt'=>static::$bcryptSalt)));
         
         // Create the user
         $context = $this->uoW->getDbContext();
@@ -81,7 +82,7 @@ class AddUserAction extends GenericAction{
         // Check password
         $password = $this->user->getPassword();
         if ($password == null || strlen($password) < 5){
-            $this->result->report->logError('Invalid password');
+            $this->result->report->logError('ACCOUNT_INVALID_PASSWORD');
         }
         
         return count($this->result->report->errors) == 0;
@@ -95,13 +96,13 @@ class AddUserAction extends GenericAction{
     private function checkEmail(){
         $email = $this->user->getEmail();
         if($email == null || !preg_match('#^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$#',$email)){
-            $this->result->report->logError('Invalid email');
+            $this->result->report->logError('ACCOUNT_INVALID_EMAIL');
         }
         
         $context = $this->uoW->getDbContext();
         $repository = $context->getRepository('W4fModel:Account');
         if( $repository->findOneByEmail($email) != null){
-            $this->result->report->logError('Email already in use.');
+            $this->result->report->logError('ACCOUNT_EMAIL_EXISTS');
         }
     }
     
@@ -116,13 +117,13 @@ class AddUserAction extends GenericAction{
         $login = $this->user->getLogin();
         if ($login == null || strlen($login) < 3 || strlen($login) > 16
                 || !preg_match('#^[a-zA-Z][a-zA-Z0-9 ]+$#', $login)){
-            $this->result->report->logError('Invalid login');
+            $this->result->report->logError('ACCOUNT_INVALID_LOGIN');
         }
         
         $context = $this->uoW->getDbContext();
         $repository = $context->getRepository('W4fModel:Account');
         if( $repository->findOneByLogin($login) != null){
-            $this->result->report->logError('User already exists.');
+            $this->result->report->logError('ACCOUNT_LOGIN_EXISTS');
         }
     }
 }

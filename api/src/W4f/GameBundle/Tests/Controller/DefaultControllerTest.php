@@ -10,8 +10,21 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/hello/Fabien');
+        $client->request('GET', '/api/');
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        //print_r($client->getResponse());
+        $this->assertTrue(
+		    $client->getResponse()->headers->contains(
+		        'Content-Type',
+		        'application/json'
+		    )
+		);
+
+		$response = json_decode($client->getResponse()->getContent())[0];
+
+		$this->assertTrue(array_key_exists('Hello', $response), "System should return an hello key");
+		$this->assertEquals('hello!', $response->Hello);
+
+		
     }
 }
