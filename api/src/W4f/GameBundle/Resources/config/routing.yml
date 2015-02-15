@@ -10,3 +10,16 @@ w4f_game_subscribe:
     defaults: { _controller: W4fGameBundle:User:addUser }
     requirements:
         _method:  POST
+        
+    
+w4f_game_login:
+    path: /login
+    defaults: { _controller: W4fGameBundle:User:loginUser }
+    requirements:
+        _method:  POST
+
+w4f_game_login_getCurrent:
+    path: /current
+    defaults: { _controller: W4fGameBundle:User:getCurrentUser }
+    requirements:
+        _method:  GET    
