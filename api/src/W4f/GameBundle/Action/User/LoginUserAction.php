@@ -7,14 +7,13 @@ use W4f\GameBundle\Action\GenericAction;
 use W4f\GameBundle\Model\Account;
 use W4f\GameBundle\Model\UnitOfWork;
 use W4f\GameBundle\Model\ControllerResponse;
+use W4F\GameBundle\Action\ActionConstants;
 
 /**
  * Performs checks on the user suscription.
  */
 class LoginUserAction extends GenericAction{
     
-    public static $bcryptSalt = "war4funIsAWargameThatRocks";
-
     /**
      * The current user being added.
      * @var \W4f\GameBundle\Model\Account
@@ -42,67 +41,33 @@ class LoginUserAction extends GenericAction{
         $this->user = $user;
         $this->result = new ControllerResponse();
         
-        if (!$this->checkUserValidity()){
+        if ($this->user === null 
+            || $this->user->getLogin() === null
+            || $this->user->getPassword() === null)
+        {
+            $this->result->report->logError("ACCOUNT_MISSING_INFORMATION");
             $this->result->response = false;
             return $this->result;
         }
+
         // Hash the password
-        $this->user->setPassword(password_hash($this->user->getPassword(), PASSWORD_BCRYPT, array('salt'=>static::$bcryptSalt)));
+        $this->user->setPassword(password_hash($this->user->getPassword(), PASSWORD_BCRYPT, array('salt'=>ActionConstants::$userBcryptSalt)));
         
-        
-        $login = $this->user->getLogin();
-        if(!$this->comparePassword($login)){
+        if(!$this->comparePassword()){
             $this->result->response = false;
             return $this->result;
         }
-        
         
         $this->result->response = true;
         return $this->result;
     }
     
-    /**
-     * Verifies user account validity. Includes:
-     * - login
-     * - email
-     * - password
-     * @return boolean
-     */
-    private function checkUserValidity(){
-        if ($this->user == null)
-        {
-            $this->result->report->logError("No user provided");
-            return false;
-        }
-
-        // Check login
-        $this->checkLogin();
-             
-        // Check password
-        $this->checkPassword();
-
-        return count($this->result->report->errors) == 0;
-    }
-    
-    private function checkLogin(){
+    private function comparePassword(){
+        // Get user and password
         $login = $this->user->getLogin();
-        if ($login == null ){
-            $this->result->report->logError('ACCOUNT_INVALID_LOGIN');
-        }
-    }
-    
-    private function checkPassword(){
-        $password = $this->user->getPassword();
-        if ($password === null){
-            $this->result->report->logError('ACCOUNT_INVALID_PASSWORD');
-        }
-    }
-    
-    private function comparePassword($login){
-        //recup le password
         $password = $this->user->getPassword();
         
-        //trouve l'objet account
+        // Find account and check password.
         $context = $this->uoW->getDbContext();
         $repository = $context->getRepository('W4fModel:Account');
         $accounts = $repository->findByLogin($login);
@@ -113,7 +78,7 @@ class LoginUserAction extends GenericAction{
             $account = $accounts[0];
             $passFromDb = $account->getPassword();
             if($passFromDb !== $password){
-                $this->result->report->logError('ACCOUNT_INCORRECT_PASSWORD');
+                $this->result->report->logError('AUTHENTICATION_FAILED');
             }
         }
         return count($this->result->report->errors) === 0;   

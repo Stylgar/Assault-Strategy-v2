@@ -16,11 +16,10 @@ class UnitOfWork {
     public function __construct(EntityManager $manager)
     {
         $this->dbContext = $manager;
-        $this->dbContext->getConnection()->beginTransaction(); // suspend auto-commit;
+        //$this->dbContext->getConnection()->beginTransaction(); // suspend auto-commit;
     }
     
     public function __destruct() {
-        
     }
     
     /**
@@ -43,7 +42,7 @@ class UnitOfWork {
     public function save(){
         try{
             $this->dbContext->flush();
-            $this->dbContext->getConnection()->commit();
+            //$this->dbContext->getConnection()->commit();
         } catch (Exception $ex) {
             try{
                 $this->dbContext->getConnection()->rollback();

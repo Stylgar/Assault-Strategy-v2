@@ -7,13 +7,14 @@ use W4f\GameBundle\Action\GenericAction;
 use W4f\GameBundle\Model\Account;
 use W4f\GameBundle\Model\UnitOfWork;
 use W4f\GameBundle\Model\ControllerResponse;
+use W4f\GameBundle\Action\ActionConstants;
 
 /**
  * Performs checks on the user suscription.
  */
 class AddUserAction extends GenericAction{
     
-    public static $bcryptSalt = "war4funIsAWargameThatRocks";
+    
 
     /**
      * The current user being added.
@@ -48,7 +49,7 @@ class AddUserAction extends GenericAction{
             return $this->result;
         }
         // Hash the password
-        $this->user->setPassword(password_hash($this->user->getPassword(), PASSWORD_BCRYPT, array('salt'=>static::$bcryptSalt)));
+        $this->user->setPassword(password_hash($this->user->getPassword(), PASSWORD_BCRYPT, array('salt'=>ActionConstants::$userBcryptSalt)));
         
         // Create the user
         $context = $this->uoW->getDbContext();

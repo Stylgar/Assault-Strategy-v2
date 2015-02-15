@@ -2,13 +2,15 @@
 
 namespace W4f\GameBundle\Tests\Controller;
 
-use W4f\GameBundle\Action\User\AddUserAction;
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use W4f\GameBundle\Action\ActionConstants;
+use W4f\GameBundle\Tests\GenericTestCase;
 
-class UserControllerTest extends WebTestCase
+class UserControllerTest extends GenericTestCase
 {
 	public function setUp(){
-		$this->loadFixtures(array('W4f\GameBundle\Tests\DataFixtures\ORM\LoadAccountData'));
+        parent::setUp();
+		$this->apiPath ='/api/user';
+        $this->method = 'POST';
 	}
 
 	public function testNominalCase(){
@@ -22,7 +24,7 @@ class UserControllerTest extends WebTestCase
     	$this->assertNotNull($newUser, "User should be created in database");
     	$this->assertEquals("an@email.fr", $newUser->getEmail());
 
-    	$cryptedPwd = password_hash("fred1", PASSWORD_BCRYPT, array('salt'=>AddUserAction::$bcryptSalt));
+    	$cryptedPwd = password_hash("fred1", PASSWORD_BCRYPT, array('salt'=>ActionConstants::$userBcryptSalt));
     	$this->assertEquals($cryptedPwd, $newUser->getPassword());
     	
 	}
@@ -128,29 +130,4 @@ class UserControllerTest extends WebTestCase
     		'ACCOUNT_INVALID_PASSWORD');
     }
 
-    private function checkError($input, $expectedError, $nbExpectedErrors = 1){
-    	$response = $this->launchQuery($input);
-    	
-    	$this->assertFalse($response->response, "Response should be false");		
-    	$this->assertEquals($nbExpectedErrors, count($response->report->errors), 
-    		"$nbExpectedErrors error was awaited, got ".implode($response->report->errors, " --- "));
-    	if ($nbExpectedErrors == 1){
-    		$this->assertEquals($expectedError, $response->report->errors[0]);
-    	}
-    }
-
-    private function launchQuery($input){
-    	$client = static::createClient();
-
-    	$client->request('POST', '/api/user', array(),array(),array(),$input);
-
-    	$this->assertTrue(
-    		$client->getResponse()->headers->contains(
-    			'Content-Type',
-    			'application/json'
-    			)
-    		);
-
-    	return json_decode($client->getResponse()->getContent())[0];
-    }
 }
