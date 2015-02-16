@@ -7,7 +7,7 @@ use W4f\GameBundle\Action\GenericAction;
 use W4f\GameBundle\Model\Account;
 use W4f\GameBundle\Model\UnitOfWork;
 use W4f\GameBundle\Model\ControllerResponse;
-use W4F\GameBundle\Action\ActionConstants;
+use W4f\GameBundle\Action\ActionConstants;
 
 /**
  * Performs checks on the user suscription.

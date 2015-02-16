@@ -1,5 +1,6 @@
 <div class="row col-sm-offset-2 col-sm-8 bg-success" ng-show="subscribeSuccessful">
-    Congratulations, soldier, you are now part of the battlefield!
+    Congratulations, soldier, your enrollment has been confirmed by our services. You can now 
+    take control of a squad, and become a legend!
     
 </div>
 
@@ -13,22 +14,24 @@
     <form name="signUpForm" ng-submit="submitForm(signUpForm.$valid)" class="form-horizontal" novalidate="">
         
         <!-- User login -->
-        <div class="form_group" ng-class="{ 'has-error' : signUpForm.login.$invalid && !signUpForm.login.$pristine }">
+        <div class="form_group" ng-class="{ 'has-error' : (signUpForm.login.$invalid && !signUpForm.login.$pristine) || errors.loginExists }">
             <label class="col-sm-4 control-label" for="txtLogin">Your login:</label>
             <div class="col-sm-8">
                 <input type="text" name="login" id="txtLogin" ng-minlength="3" ng-maxlength="16" pattern="[a-zA-Z][a-zA-Z0-9 ]+" 
                        class="form-control" Placeholder="Login" required="" ng-model="newUser.login" />
                 <p ng-show="signUpForm.login.$invalid && !signUpForm.login.$pristine" class="help-block">Your name is required. It must be
                 between 3 and 16 characters long and must be composed only of letters, numbers and spaces.</p>
+                <p class='help-block' ng-show="errors.loginExists">Login already exists. Please pick a new one.</p>
             </div>
         </div>
         
         <!-- User email -->
-        <div class="form_group" ng-class="{ 'has-error' : signUpForm.email.$invalid && !signUpForm.email.$pristine }">
+        <div class="form_group" ng-class="{ 'has-error' : (signUpForm.email.$invalid && !signUpForm.email.$pristine) || errors.emailExists }">
             <label class="col-sm-4 control-label" for="txtMail" >Your email:</label>
             <div class="col-sm-8">
                 <input type="email" name="email" id="txtMail" class="form-control" placeholder="Email" required="" ng-model="newUser.email"/>
                 <p ng-show="signUpForm.email.$invalid && !signUpForm.email.$pristine" class="help-block">Your email is required.</p>
+                <p ng-show="error.emailExists">Email already exists. We remember you that having multiple accounts is prohibited.</p>
             </div>
             
         </div>

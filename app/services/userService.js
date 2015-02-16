@@ -6,7 +6,6 @@ angular.module('asV2.service.user', ['restangular'])
     };
     
     function get(userId){
-        console.log('You called me!');
         return Restangular.one("user", userId).get();
     }
     

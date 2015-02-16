@@ -1,10 +1,10 @@
-angular.module('asV2.signup', ['ngRoute', 'asV2.service.user'])
+angular.module('asV2.signup', ['ngRoute', 'toastr', 'asV2.service.user'])
 .config(function ($routeProvider) {
     $routeProvider.when('/signup', {
         templateUrl: 'app/components/signup/signup.html',
         controller: 'signupCtrl'
     });
-}).controller('signupCtrl', function ($scope, userService) {
+}).controller('signupCtrl', function ($scope, userService, toastr) {
     $scope.subscribeSuccessful = false;
 
     $scope.submitForm = function (isValid) {
@@ -14,11 +14,25 @@ angular.module('asV2.signup', ['ngRoute', 'asV2.service.user'])
             }
 
             userService.create($scope.newUser).then(function (result) {
-                if (result){
+                var response = result[0].response;
+                if (response){
                     $scope.subscribeSuccessful = true;
                 }
+                else{
+                    var report = result[0].report;
+                    $scope.errors = {};
+                    for (var i = 0; i<report.errors.length; ++i){
+                        console.log(report.errors[i]);
+                        if (report.errors[i] == 'ACCOUNT_LOGIN_EXISTS' ){
+                            $scope.errors.loginExists = true;
+                        }
+                        else if (report.errors[i] == 'ACCOUNT_EMAIL_EXISTS'){
+                            $scope.errors.emailExists = true;
+                        }
+                    }
+                }
             }, function () {
-                console.log('We could not add it.');
+                toastr.error('Error while trying to contact server', 'Error');
             });
 
         }
